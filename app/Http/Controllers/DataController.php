@@ -13,9 +13,12 @@ class DataController extends Controller
    */
   public function index(Request $request)
   {
-    $items = \App\Data::where('date', '>=', $request->from)
-      ->where('date', '<=', $request->to)
-      ->get();
+    $from = $request->from . ' 00:00:00';
+    $to = $request->to . ' 23:59:59';
+    $items = \App\Data::where('date', '>=', $from)
+    ->where('date', '<=', $to)
+    ->orderBy('date')
+    ->get();
 
     $resp = [
       'categories' => $items->pluck('date'),

@@ -5,6 +5,9 @@
       v-model="dates"
       style="width: 270px"
     />
+    <a-spin :spinning="!ready">
+
+    </a-spin>
     <div
       style="margin-top: 5px;"
       v-if="ready"
@@ -104,6 +107,9 @@ export default {
       ],
       options_temp: {
         chart: {
+          animations: {
+            enabled: false,
+          },
           id: 'vuechart-temp'
         },
         yaxis: {
@@ -155,7 +161,10 @@ export default {
           dashArray: 0,
         },
         chart: {
-          id: 'vuechart-hum'
+          id: 'vuechart-hum',
+          animations: {
+            enabled: false,
+          }
         },
         yaxis: {
           title: {
@@ -199,7 +208,10 @@ export default {
           dashArray: 0,
         },
         chart: {
-          id: 'vuechart-co2'
+          id: 'vuechart-co2',
+          animations: {
+            enabled: false,
+          }
         },
         yaxis: {
           title: {
@@ -254,7 +266,7 @@ export default {
       }], false, true)
     },
     load () {
-
+      this.ready = false;
       axios.get("data?from=" + this.dates[0].format("Y-MM-DD") + "&to=" + this.dates[1].format("Y-MM-DD")).then(function (resp) {
         console.log(resp);
         this.options_temp.xaxis.categories = resp.data.categories;
